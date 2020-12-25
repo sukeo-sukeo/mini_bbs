@@ -79,11 +79,16 @@ if (isset($_REQUEST['res'])) {
     <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES)?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES)?>" />
     <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES)?></p>
     <p><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES)?>）</span>[<a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a>]</p>
-    <p class="day"><a href="view.php?id="><?php echo htmlspecialchars($post['created'], ENT_QUOTES)?></a>
-<a href="view.php?id=">
-返信元のメッセージ</a>
-[<a href="delete.php?id="
-style="color: #F33;">削除</a>]
+    <p class="day"><a href="view.php?id=<?php echo htmlspecialchars($post['id']);?>"><?php echo htmlspecialchars($post['created'], ENT_QUOTES)?></a>
+    <?php if ($post['reply_message_id'] > 0): ?>
+      <a href="view.php?id=<?php echo htmlspecialchars($post['reply_message_id'], ENT_QUOTES); ?>">
+      返信元のメッセージ</a>
+    <?php endif; ?>
+
+    <?php if ($_SESSION['id'] == $post['member_id']): ?>
+      [<a href="delete.php?id=<?php echo htmlspecialchars($post['id']); ?>"
+      style="color: #F33;">削除</a>]
+    <?php endif; ?>
     </p>
     </div>
 <?php endforeach ;?>
